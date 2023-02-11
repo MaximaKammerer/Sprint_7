@@ -44,7 +44,7 @@
             <artifactId>allure-junit4</artifactId>
             <version>${allure.version}</version>
         </dependency>
-        
+
 
         <dependency>
             <!-- модуль взаимодействия Allure и RestAssured -->
