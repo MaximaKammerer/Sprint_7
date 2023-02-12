@@ -13,7 +13,9 @@ public class Courier {
     public Courier(String login, String firstName) {
         this.login = login;
         this.firstName = password;
-
+    }
+    public Courier(String password) {
+        this.password = password;
     }
     public Courier() {
 

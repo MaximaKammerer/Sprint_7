@@ -21,4 +21,21 @@ public class CourierLoginTest {
         Response response = CourierMethods.AuthCourier();
         response.then().statusCode(200).and().body("id", notNullValue());
     }
+
+    @Test
+    @DisplayName("Для авторизации нужно передать все обязательные поля")
+    public void LoginCourierWithoutPass() {
+        Response response = CourierMethods.AuthCourierWithOutLogin();
+        response.then().statusCode(400).and().body("message", equalTo("Недостаточно данных для входа"));
+    }
+    @Test
+    @DisplayName("Если авторизоваться под несуществующим пользователем, запрос возвращает ошибку")
+    public void LoginCourierForDefunctLogin() {
+        Response response = CourierMethods.AuthCourierForDefunctLogin();
+        response.then().statusCode(404).and().body("message", equalTo("Учетная запись не найдена"));
+    }
+    @After
+    public void setDown(){
+        CourierMethods.DeleteCourier();
+    }
 }

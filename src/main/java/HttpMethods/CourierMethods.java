@@ -5,7 +5,7 @@ import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
 import static model.Constants.*;
 
-import  model.Constants;
+
 
 public class CourierMethods {
 
@@ -34,6 +34,25 @@ public class CourierMethods {
                 .body(courier)
                 .post("/api/v1/courier/login");
     }
+
+    public static Response AuthCourierWithOutLogin() {
+        CourierCorrectCreate();
+        Courier courier = new Courier(LOGIN);
+        return given()
+                .header("Content-type", "application/json")
+                .body(courier)
+                .post("/api/v1/courier/login");
+    }
+    public static Response AuthCourierForDefunctLogin(){
+        CourierCorrectCreate();
+        Courier courier = new Courier(LOGIN+PASSWORD, PASSWORD, FIRSTNAME);
+        return given()
+                .header("Content-type", "application/json")
+                .body(courier)
+                .post("/api/v1/courier/login");
+    }
+
+
     public static Response DeleteCourier(){
         Response response = AuthCourier();
         LoginRespounse loginRespounse =  response.body().as(LoginRespounse.class);

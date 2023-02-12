@@ -6,5 +6,6 @@ package model;
         public final static String PASSWORD = "CourierPass";
         public final static String FIRSTNAME = "CourierName";
 
+
     }
 
