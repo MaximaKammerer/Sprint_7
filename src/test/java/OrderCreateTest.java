@@ -1,21 +1,19 @@
-import HttpMethods.*;
-import model.Order;
-import org.hamcrest.MatcherAssert;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import HttpMethods.OrderMethods;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import java.util.List;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
+import model.Order;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import java.util.List;
+
+import static model.Constants.BASE_URL;
+import static org.hamcrest.CoreMatchers.notNullValue;
 
 @RunWith(Parameterized.class)
-public class OrderCreateTest  {
+public class OrderCreateTest {
     private final String firstNameValue;
     private final String lastNameValue;
     private final String addressValue;
@@ -38,7 +36,7 @@ public class OrderCreateTest  {
         this.colorValue = colorValue;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Тестовые данные: {0} {1} {2} {3} {4} {5} {7} {8} {9}")
     public static Object[][] getTestDataCreateOrder() {
         return new Object[][]{
                 {"Sophia", "St", "Pushkina, 174 apt.", "2", "+7 920 333 33 33", 3, "2023-01-23", "Go home", null},
@@ -49,17 +47,17 @@ public class OrderCreateTest  {
     }
 
     @Before
-    public void setUp(){
-        RestAssured.baseURI = "http://qa-scooter.praktikum-services.ru";
+    public void setUp() {
+        RestAssured.baseURI = BASE_URL;
     }
 
     @DisplayName("можно указать один из цветов — BLACK или GREY/можно указать оба цвета/можно совсем не указывать цвет")
     @Test
-    public void testTrackFieldInOrder(){
-       Response response  = OrderMethods.OrderCorrectCreate(new Order(
+    public void testTrackFieldInOrder() {
+        Response response = OrderMethods.orderCorrectCreate(new Order(
                 firstNameValue, lastNameValue, addressValue,
                 metroStationValue, phoneValue, rentTimeValue, deliveryDateValue, commentValue, colorValue));
-       response.then().statusCode(201).and().body("track", notNullValue());
+        response.then().statusCode(201).and().body("track", notNullValue());
         System.out.println(response.body().asString());
     }
 }
