@@ -18,7 +18,7 @@ public class CourierLoginTest {
 
     @Test
     @DisplayName("Курьер может авторизоваться")
-    public void LoginCourier() {
+    public void loginCourier() {
         Response response = CourierMethods.authCourier();
         response.then().statusCode(200).and().body("id", notNullValue());
     }
